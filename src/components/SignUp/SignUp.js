@@ -8,7 +8,7 @@ const SignUp = () => {
         <>
             <h2>Signup form</h2>
             <SignUpContainer />
-            <Link to={PATHS.LOGIN}>Login</Link>
+            <Link to={PATHS.LOGIN} className='submit-button'>Login</Link>
         </>
     );
 }

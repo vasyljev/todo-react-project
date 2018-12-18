@@ -1,48 +1,171 @@
-h2 {
-    margin-left: 30px;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+h1, h2, h4 {
+    margin: 10px auto;
+    text-align: center;
 }
 
 a {
-    margin-right: 5px;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    
 }
 
-.lifting-component {
+.list-wrap {
     display: flex;
     justify-content: center;
+    align-items: center;
+
 }
 
-.lifting-item {
-    text-align: center;
-    padding: 5px;
-    &:first-child {
-        border-right: 1px solid black;
-    }
+.item-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+
+#items-list {
     
-    ul {
-        margin: 0;
-        padding: 0;
-    }
     li {
-        list-style-type:none;
-        margin-bottom: 5px;
-        cursor: pointer; 
+        margin: 10px;
+        margin-left: 40px;
+        &:hover {
+            .delete-button, .edit-button {
+                opacity: 1;
+            }
+        }
     }
 }
+#main-header {
+    margin: 10px auto;
+    text-align: center;
+}
+
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+}
+
+.input-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+.login-form-input {
+    margin: 20px 5px;
+    padding: 5px;
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+
+.submit-button {
+    margin: 10px 10px;
+    padding: 3px;
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: aquamarine;
+    border: 1px solid gray;
+    font-size: 14px;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+
+}
+
+#add-form-wrap {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.4);
+    z-index: 0;
+}
+
+#add-new-item-form {
+    width: 550px;
+    height: 200px;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-right: 20px;
+}
+#add-new-item-form-wrap {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center; 
+    margin-top: 14px;
+}
+
+
 
 .delete-button {
     width: 20px;
     height: 20px;
+    display: inline-block;
+    margin: 0 5px;
     background-image: url('../images/delete_img.png');
     background-size: contain;
     background-repeat: no-repeat;
+    cursor: pointer;
+    opacity: 0;
 }
 
 .edit-button {
     width: 20px;
     height: 20px;
+    display: inline-block;
+    margin: 0 10px;
+    margin-left: 30px;
     background-image: url('../images/edit_img.png');
     background-size: contain;
     background-repeat: no-repeat;
+    cursor: pointer;
+    opacity: 0;
+}
+
+#close-button {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: 10px 10px;
+    margin-left: 30px;
+    background-image: url('../images/delete_img.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+.item-link {
+    font-size: 16px;
+    padding: 0 10px;
 }
 
 .doneTodoItem {
@@ -57,9 +180,9 @@ a {
 }
 
 .visible {
-    display: block;
+    display: block !important;
 }
 
 .invisible {
-    display: none;
+    display: none !important;
 }

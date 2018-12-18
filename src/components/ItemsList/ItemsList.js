@@ -13,29 +13,25 @@ import { changeTodoItem } from '../../actions/todoList';
 
 class ItemsList extends Component {
     render() {
-        // const list =() => this.props.correntList();
         const list = this.props.list.map((item) => 
         <li key={item['id']} className={this.setColorOfText(item['expires_at'])} style={item['completed'] ? {'textDecoration': 'line-through'} : {} } 
-        onClick={(event) => {console.log('ItemsList111:', item['id'], this.props.userDate['token']); 
+        onClick={(event) => {
             if(event.target.className === 'delete-button') {
                 return todoListService.deleteTodoItem(item['id'], this.props.userDate['token']).then(()=> this.getTodoListItems());
             }else if(event.target.className === 'completed-checkbox') {  
-                    // console.log('completed', item['title'], item['id'], !item['completed'], this.props.userDate['token']); 
-                    // event.target.checked = !item['completed'];
                     return todoListService.changeTodoItem(item['title'], item['id'], !item['completed'],  this.props.userDate['token'], item['expires_at']).then(()=> this.getTodoListItems());
             } else if(event.target.className === 'edit-button') {
-                console.log(item['id']);
                 this.editTodoItem(item['id']);
             }
         }}>
-        <input type="checkbox" name="completed" className="completed-checkbox"  defaultChecked={item['completed']}/><Link to={`/todos/${item['id']}`}>Item {item['id']} {item['title']} </Link> <div className="edit-button"></div><div className="delete-button"></div></li>);
+        <input type="checkbox" name="completed" className="completed-checkbox"  defaultChecked={item['completed']}/><Link to={`/todos/${item['id']}`} className='item-link'> {item['title']} </Link> <div className="edit-button"></div><div className="delete-button"></div></li>);
         
         return (
-            <>
-                <h2>ItemsList {this.props.tempId}</h2>
-                <ul>
-                    {list}
-                </ul>
+            <>  <div className='list-wrap'>
+                    <ul id="items-list">
+                        {list}
+                    </ul>
+                </div>
             </>
     )
     }

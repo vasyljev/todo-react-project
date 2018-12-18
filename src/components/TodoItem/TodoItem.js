@@ -9,18 +9,18 @@ import {PATHS} from "../../constants/routes";
 
 
 const TodoItem = (props) => {
-    console.log('TODOITEM', props.list);
-
-    const todoItem = props.list.filter(item => item['id'] == props.match.params.id)[0];
-    console.log('ITEM: ', todoItem);
+    const todoItem = props.list.filter(item => item['id'] == props.match.params.id)[0];    
     const date = new Date(todoItem.expires_at);
-    console.log('DATE ', date)
     return (
-        <>  
-            <h2>TodoItem</h2>
-            <p>Item title: {todoItem.title}</p>
-            <p>Date: {date.toString()}</p>
-            <Link to={PATHS.TODO_LIST_ITEMS}>Back</Link>
+        <>
+            <div className='item-wrap'>  
+                <h3>TodoItem</h3>
+                <div>
+                    <p>Item title: {todoItem.title}</p>
+                    <p>Date: {date.toString()}</p>
+                </div>                
+            </div>
+            <Link to={PATHS.TODO_LIST_ITEMS} className="submit-button">Back</Link>
         </>
     )
 }

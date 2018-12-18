@@ -16,13 +16,13 @@ class Login extends Component {
             return <Redirect to={PATHS.TODO_LIST} />
         }
         return(
-            <div>
+            <div className='login-form'>
                 <h2>Login form</h2>
                 <LoginContainer isAuthenticated={isAuthenticated} 
                                 loginHandle= {this.logHandle} 
                                 loginUser= {this.loginUser}
                                 />
-                <Link to={PATHS.SIGNUP}>Sign Up</Link>
+                <Link to={PATHS.SIGNUP} className='submit-button'>Sign Up</Link>
                 {/* <Link to={PATHS.TODO_LIST}>Todo</Link> */}
             </div>
         );

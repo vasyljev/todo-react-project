@@ -1,8 +1,6 @@
 export const LOGIN = 'LOGIN';
 
 export const loginUser = userDate => {
-    console.log('login');
-    console.log(userDate);
     return dispatch => {
         dispatch({
             type: LOGIN,
@@ -22,14 +20,3 @@ export const logOutUser = () => {
         })
     }
 }
-
-// export const CURRENT_USER = 'CURRENT_USER';
-
-// export const addCurrentUserDate = () => {
-//     return dispatch => {
-//         dispatch({
-//             type: CURRENT_USER,
-//             userDate
-//         })
-//     }
-// }

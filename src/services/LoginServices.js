@@ -6,7 +6,7 @@ class LoginServices {
     signIn(user) {
        return axios.post(`${API_BASE}/users/sign_in`, user)
               .then(res => {
-                console.log(res.data.auth, res.data.token);
+                console.log(res.data);
                   return res.data;
               })
               .catch(error => {
@@ -14,11 +14,9 @@ class LoginServices {
               })
     }
     signUp(user) {
-        console.log(user);
         return axios.post(`${API_BASE}/users/sign_up`, user)
         .then(
             res => {
-                console.log(res);
                 console.log(res.data);
             }
         )

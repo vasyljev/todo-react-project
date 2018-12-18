@@ -4,10 +4,7 @@ import {API_BASE} from "../constants/API";
 
 class todoListServices {
     sendTodoItem = (data, userData, expiresDate, id) => {
-        console.log('send req', data);
-        console.log('send id: ', id);
         if(id != '') {
-            console.log('ChangeSendTODO', data, id, false, userData, expiresDate)
            return this.changeTodoItem(data, id, false, userData, expiresDate)
         } else {
             return axios.post(`${API_BASE}/todos`, {
@@ -38,7 +35,6 @@ class todoListServices {
             }
         })
         .then(res => {
-          console.log('res data: ', res.data, 'res data data: ', res.data.data);
             return res.data.data;
         })
         .catch(error => {

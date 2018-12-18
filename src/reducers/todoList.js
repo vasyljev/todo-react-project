@@ -7,7 +7,8 @@ const InitialState = {
     visibilityClass: 'invisible',
     tempTitle: 'buy milk',
     tempDate: new Date(),
-    tempId: ''
+    tempId: '',
+    buttonName: 'Add'
 }
 
 export default (state = InitialState, action) => {
@@ -23,12 +24,12 @@ export default (state = InitialState, action) => {
                 visibilityClass: state.visibilityClass === 'visible' ? 'invisible' : 'visible'
             })
         case CHANGE_ITEM: 
-            console.log('Change Item: ', action.title, action.date, action.id)
             return({
                 ...state,
                 tempTitle: action.title,
                 tempDate: new Date(action.date),
-                tempId: action.id
+                tempId: action.id,
+                buttonName: state.tempId == '' ? 'Edit' : 'Add'
             })
 
         default: return state;
