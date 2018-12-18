@@ -1,0 +1,65 @@
+h2 {
+    margin-left: 30px;
+}
+
+a {
+    margin-right: 5px;
+}
+
+.lifting-component {
+    display: flex;
+    justify-content: center;
+}
+
+.lifting-item {
+    text-align: center;
+    padding: 5px;
+    &:first-child {
+        border-right: 1px solid black;
+    }
+    
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        list-style-type:none;
+        margin-bottom: 5px;
+        cursor: pointer; 
+    }
+}
+
+.delete-button {
+    width: 20px;
+    height: 20px;
+    background-image: url('../images/delete_img.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.edit-button {
+    width: 20px;
+    height: 20px;
+    background-image: url('../images/edit_img.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.doneTodoItem {
+    text-decoration: overline;
+}
+.red {
+    color: red
+}
+
+.yellow {
+    color: yellow
+}
+
+.visible {
+    display: block;
+}
+
+.invisible {
+    display: none;
+}
