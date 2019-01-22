@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import LoginContainer from '../../containers/Login';
 import LoginService from '../../services/LoginServices';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {PATHS} from "../../constants/routes";
 import {loginUser} from '../../actions/login';
 import {logOutUser} from '../../actions/login';
@@ -13,12 +13,12 @@ class Login extends Component {
     
     
     render() {      
-        this.setLocalAuthent();  
+        // this.setLocalAuthent();  
         
         let authValue = JSON.parse(localStorage.getItem('isAuthenticated'))
         console.log('isAuthenticated render: ', authValue);
         console.log('update',  this.props.isAuthenticated);
-        if(this.props.isAuthenticated === true) {
+        if(JSON.parse(localStorage.getItem('isAuthenticated')) === true) {
             console.log('isAuthenticated render true: ', authValue);
             this.props.loginUser();
             return <Redirect to={PATHS.TODO_LIST} />
@@ -36,7 +36,24 @@ class Login extends Component {
     setLocalAuthent = () => {       
        localStorage.setItem('isAuthenticated', this.props.isAuthenticated);
         console.log('isAuthenticated: ', localStorage.getItem('isAuthenticated'));
-        return localStorage.getItem('isAuthenticated');
+    }
+
+    componentDidMount() {
+        // localStorage.setItem('isAuthenticated', this.props.isAuthenticated);
+        // console.log('componentDidMount',  this.props.isAuthenticated, JSON.parse(localStorage.getItem('isAuthenticated')));
+        // if(JSON.parse(localStorage.getItem('isAuthenticated')) === true) {
+        //     console.log('componentDidMount true',  this.props.isAuthenticated);
+        //     return <Redirect to={PATHS.TODO_LIST} />
+        // }
+    }
+    
+    componentDidUpdate() {
+        // localStorage.setItem('isAuthenticated', this.props.isAuthenticated);
+        // console.log('componentDidUpdate',  this.props.isAuthenticated, JSON.parse(localStorage.getItem('isAuthenticated')));
+        // if(JSON.parse(localStorage.getItem('isAuthenticated')) === true) {
+        //     console.log('update true',  this.props.isAuthenticated);
+        //     return <Redirect to={PATHS.TODO_LIST} />
+        // }
     }
 
     logHandle = values => {               
@@ -46,15 +63,13 @@ class Login extends Component {
             // console.log('auth Login: ', auth)
             if(auth['auth']) {
                 this.props.loginUser(auth); 
-                this.setLocalAuthent();
-                // this.redirectToLogin();
                 console.log('logHandle ', this.props.isAuthenticated, localStorage.getItem('isAuthenticated'));
-                
+                zz
             } else {
                 console.log('No') 
             }
         })      
-    }
+    }   
 }
 
 const mapStateToProps = ({login}) => ({
@@ -65,4 +80,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     loginUser, logOutUser
 }, dispatch);
 
-export default withRouter(connect (mapStateToProps, mapDispatchToProps) (Login)); 
+export default connect (mapStateToProps, mapDispatchToProps) (Login); 

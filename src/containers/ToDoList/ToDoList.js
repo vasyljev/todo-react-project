@@ -26,7 +26,7 @@ class ToDoList extends Component {
         const {handleSubmit} = this.props;
         return(
             <>
-                {/* <h2>Hello, {this.props.userDate['user']['firstName']}!</h2> */}
+                z{/* <h2>Hello, {this.props.userDate['user']['firstName']}!</h2> */}
                 <h4>What do you want to do today?</h4>  
                 <Switch>
                     <Route exact path={PATHS.TODO_LIST_ITEMS} component={ItemsList} />

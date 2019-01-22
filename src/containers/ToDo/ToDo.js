@@ -25,6 +25,7 @@ class ToDo extends Component {
         let isAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
         return (
                 <Switch>
+                   z
                     <PrivateRoute path={PATHS.TODO_LIST} submitHandle={this.editOrAddListItem} component={ToDoList} isAuthenticated={isAuthenticated} />                       
                 </Switch>                           
         );
