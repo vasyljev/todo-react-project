@@ -1,6 +1,8 @@
 import { ADD_ITEM } from '../actions/todoList';
 import { CHANGE_VISIBILITY } from '../actions/todoList';
 import { CHANGE_ITEM } from '../actions/todoList';
+import { CHANGE_BUTTON_NAME } from '../actions/todoList';
+
 
 const InitialState = {
     list: [],
@@ -28,10 +30,14 @@ export default (state = InitialState, action) => {
                 ...state,
                 tempTitle: action.title,
                 tempDate: new Date(action.date),
-                tempId: action.id,
-                buttonName: state.tempId == '' ? 'Edit' : 'Add'
+                tempId: action.id
+                
             })
-
+        case CHANGE_BUTTON_NAME:
+            return ({
+                ...state,
+                buttonName: action.id !== '' ? 'Edit' : 'Add'
+            })
         default: return state;
     }
 

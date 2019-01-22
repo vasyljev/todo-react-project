@@ -35,6 +35,7 @@ class todoListServices {
             }
         })
         .then(res => {
+            console.log('res.data.data', res.data.data);
             return res.data.data;
         })
         .catch(error => {

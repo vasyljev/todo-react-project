@@ -10,6 +10,7 @@ import {setTodoDate} from '../../actions/todoDate';
 import { changeVisibilyty } from '../../actions/todoList';
 import todoListService from '../../services/todoListService';
 import { changeTodoItem } from '../../actions/todoList';
+import { changeButtonName } from '../../actions/todoList';
 
 class ItemsList extends Component {
     render() {
@@ -38,25 +39,22 @@ class ItemsList extends Component {
 
     editTodoItem = (id) => {
         this.props.changeVisibilyty();
-        const item = this.props.list.filter(item => item['id'] == id)[0];
-        // console.log('iiiiii ', item);
+        const item = this.props.list.filter(item => item['id'] == id)[0];        
         this.props.changeTodoItem(item['title'], item['expires_at'], item['id']);
+        this.props.setTodoDate(new Date(item['expires_at']));
+        this.props.changeButtonName(item['id']);
 
     }
     
     setColorOfText = (date) => {
         const now = new Date();
         const otherDate = new Date(date);
-        // console.log('other date: ', otherDate.valueOf());
         const difference = otherDate.valueOf() - now.valueOf();
         if(difference < 3600600) {
-            // console.log('red', difference);
             return ('red');
         } else if ((difference > 3600600)&&(difference < 3*3600600)) {
-            // console.log('yellow');
             return ('yellow');
         } else {
-            // console.log('black', difference);
             return ('');
         }
     }
@@ -64,6 +62,8 @@ class ItemsList extends Component {
     getTodoListItems = () => {
         todoListService.getTodoList(this.props.userDate['token'])
         .then(resp => {
+            // console.log('resp ItemList', resp);
+            localStorage.setItem('TodoList', JSON.stringify(resp));
             return this.props.addNewItemTodo(resp)
         });
     }
@@ -76,11 +76,12 @@ const mapStateToProps = ({login, todoList, todoDate}) => ({
     visibilityClass: todoList.visibilityClass,
     tempTitle: todoList.title,
     tempDate: todoList.date,
-    tempId: todoList.tempId
+    tempId: todoList.tempId,
+    buttonName: todoList.buttonName
   });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    loginUser, logOutUser, addNewItemTodo, setTodoDate, changeVisibilyty, changeTodoItem
+    loginUser, logOutUser, addNewItemTodo, setTodoDate, changeVisibilyty, changeTodoItem, changeButtonName
 }, dispatch);
 
 export default connect (mapStateToProps, mapDispatchToProps) (ItemsList);

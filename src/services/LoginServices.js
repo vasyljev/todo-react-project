@@ -18,6 +18,7 @@ class LoginServices {
         .then(
             res => {
                 console.log(res.data);
+                return res.data.message;
             }
         )
         .catch(

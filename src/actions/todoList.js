@@ -32,3 +32,14 @@ export const changeTodoItem = (title, date, id) => {
         })
     }
 }
+
+export const CHANGE_BUTTON_NAME = 'CHANGE_BUTTON_NAME';
+
+export const changeButtonName = (id) => {
+    return dispatch => {
+        dispatch({
+            type: CHANGE_BUTTON_NAME,
+            id
+        })
+    }
+}

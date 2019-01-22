@@ -5,6 +5,7 @@ import {addNewItemTodo} from '../../actions/todoList';
 import {setTodoDate} from '../../actions/todoDate';
 import { changeVisibilyty } from '../../actions/todoList';
 import { changeTodoItem } from '../../actions/todoList';
+import { changeButtonName } from '../../actions/todoList';
 import ItemsList from '../../components/ItemsList';
 import TodoItem from '../../components/TodoItem';
 
@@ -20,32 +21,26 @@ import todoListService from '../../services/todoListService';
 
 class ToDoList extends Component {
     render() {
-        // console.log('list: ', this.props.list[0]);
-        // console.log('date: ', this.props.date);
+        
+        console.log('ToDoList render', this.props.isAuthenticated);
         const {handleSubmit} = this.props;
-
         return(
             <>
-                <h2>Hello, {this.props.userDate['user']['firstName']}!</h2>
+                {/* <h2>Hello, {this.props.userDate['user']['firstName']}!</h2> */}
                 <h4>What do you want to do today?</h4>  
                 <Switch>
                     <Route exact path={PATHS.TODO_LIST_ITEMS} component={ItemsList} />
                     <Route  path={PATHS.TODO_ITEM} component={TodoItem} />
                 </Switch> 
-                <div id='add-form-wrap' className={this.props.visibilityClass} onClick={(event) => {
-                    if(event.target.id === 'add-form-wrap' || event.target.id === 'close-button') {
-                        this.props.changeVisibilyty();
-                        this.props.changeTodoItem('by milk', new Date() ,'');
-                    }
-                }}>        
-                    <form onSubmit={values => {
-                        todoListService.sendTodoItem(handleSubmit(values), this.props.userDate['token'], this.props.date, this.props.tempId, this.props.tempDate).then(()=> this.getTodoListItems()).then(() => this.props.setTodoDate(new Date())).then(() => this.props.changeVisibilyty());
-                        this.props.changeTodoItem('by milk', new Date() ,'');
-                    }
-                        }  id="add-new-item-form">
+                <div id='add-form-wrap' className={this.props.visibilityClass} onClick={this.closeWindowOnClick}>        
+                    <form onSubmit={handleSubmit} id="add-new-item-form">
                         <div id="close-button"></div>
                         <div id="add-new-item-form-wrap">
-                            <Field name='todoItem' type='text' component='input' placeholder={this.props.tempTitle} className="login-form-input" />
+                            <Field name='todoItem' 
+                                   type='text' 
+                                   component='input' 
+                                   placeholder={this.props.tempTitle} 
+                                   className="login-form-input" />
                             <Field name='endDateTodoItem' 
                                     component={datePickerContainer}
                                     showTimeSelect
@@ -56,50 +51,71 @@ class ToDoList extends Component {
                                     dateFormat="yyyy-MM-dd HH:mm"
                                     timeCaption="time"
                                     className="login-form-input" 
-                                    />
-                            
+                                    />                            
                         <button type="submit" className="submit-button">{this.props.buttonName}</button>
                     </div>
                     </form>
                 </div>
-                <button onClick={() => this.props.changeVisibilyty()} className='submit-button'>Add new item</button>
-                <button onClick={() => this.props.logOutUser()} className='submit-button'>Log Out</button>
+                <button onClick={this.addNewItemClickHandle} className='submit-button'>Add new item</button>
+                {/* <button onClick={() => this.props.logOutUser()} className='submit-button'>Log Out</button> */}
+                <button onClick={() => {
+                    this.props.logOutUser();
+                    localStorage.setItem('isAuthenticated', false);
+                    }} className='submit-button'>Log Out</button>
             </>
         );
         
-    }   
- 
+    }  
+    
+    closeWindowOnClick = event => {
+        if(event.target.id === 'add-form-wrap' || event.target.id === 'close-button') {
+            this.props.changeVisibilyty();
+            this.props.changeTodoItem('by milk', new Date() ,'');
+            this.props.reset();
+        }
+    }
+        
+    addNewItemClickHandle = () => {
+        this.props.changeButtonName('');
+        this.props.changeVisibilyty();
+    }
 
     getTodoListItems = () => {
         todoListService.getTodoList(this.props.userDate['token'])
         .then(resp => {
-            return this.props.addNewItemTodo(resp)
+            localStorage.setItem('TodoList', JSON.stringify(resp));
+            return this.props.addNewItemTodo(this.props.addNewItemTodo(JSON.parse(localStorage.getItem('TodoList'))));
         });
     }
 
     handleChange = date => {
+        if(this.props.tempId != '') {
+            this.props.setTodoDate(this.props.tempDate);
+        }
         let now = new Date();
-        return ( now.valueOf() < date.valueOf() ?  this.props.setTodoDate(date) : console.log('ERROR!'));
+        return ( now.valueOf() < date.valueOf() ?  this.props.setTodoDate(date) : window.alert('ERROR!'));
     }
 
     componentDidMount() {
-        this.getTodoListItems();
+        // this.getTodoListItems();  
+        if(JSON.parse(localStorage.getItem('isAuthenticated')) == true) {
+            console.log('auth render true');
+           this.props.loginUser();
+       }
+        this.props.addNewItemTodo(JSON.parse(localStorage.getItem('TodoList')));      
     }
 
-    componentDidUpdate() {
-       
-        this.getTodoListItems();
-        
+    componentDidUpdate() {       
+        // this.getTodoListItems();        
+        this.props.addNewItemTodo(JSON.parse(localStorage.getItem('TodoList')));
     }
 }
 
 ToDoList = reduxForm({
     form: 'newItemTodo',
-    onSubmit: (value) => { 
-        console.log('submit', value.endDateTodoItem);
-        const item = value.todoItem;
-        value.todoItem = '';
-        return (item);
+    initialValues: {
+        todoItem: '',
+        endDateTodoItem: null
     }
 })(ToDoList);
 
@@ -116,7 +132,7 @@ const mapStateToProps = ({login, todoList, todoDate}) => ({
   });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    loginUser, logOutUser, addNewItemTodo, setTodoDate, changeVisibilyty, changeTodoItem
+    loginUser, logOutUser, addNewItemTodo, setTodoDate, changeVisibilyty, changeTodoItem, changeButtonName
 }, dispatch);
 
 

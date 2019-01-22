@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
 import {Provider} from 'react-redux';
 import store from './store'
 
@@ -12,11 +13,13 @@ import {PATHS} from "./constants/routes";
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 
+const history = createBrowserHistory();
+
 class App extends Component {
   render() {
     return (
       <Provider store ={store}>
-        <BrowserRouter>
+        <Router history={history}>
           <div className="App">
             <MainLayout>
               <Switch>
@@ -28,7 +31,7 @@ class App extends Component {
               </Switch>
             </MainLayout>
           </div>
-        </BrowserRouter>
+        </Router>
       </Provider>  
     );
   }
